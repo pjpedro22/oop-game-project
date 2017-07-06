@@ -128,7 +128,7 @@ class Engine {
         }
 
         this.enemies[enemySpot] = new Enemy(enemySpot * ENEMY_WIDTH);
-        // console.log('this.enemies');
+        // console.log('this.enemies', this.enemies);
         // [null, null, null, null, {x:12, y:232}]
     }
 
@@ -174,7 +174,7 @@ class Engine {
                 var closer = false;
         
             this.enemies.forEach((enemy) => {
-                if(enemy.x === this.player.x && (enemy.y + ENEMY_HEIGHT) > 300){
+                if(enemy.x === this.player.x && (enemy.y + ENEMY_HEIGHT) <= PLAYER_HEIGHT * 2){
                 // console.log('Collision', 'enemy.y: ', enemy.y, ' this.player.y: ',  this.player.y);
                     closer = true;
                 }
