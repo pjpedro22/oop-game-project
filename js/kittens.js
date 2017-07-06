@@ -126,7 +126,7 @@ class Engine {
         }
 
         this.enemies[enemySpot] = new Enemy(enemySpot * ENEMY_WIDTH);
-        // console.log('this.enemies');
+        console.log('this.enemies');
         // [null, null, null, null, {x:12, y:232}]
     }
 
