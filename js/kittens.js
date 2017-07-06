@@ -137,18 +137,53 @@ class Engine {
         this.score = 0;
         this.lastFrame = Date.now();
 
+        
         // Listen for keyboard left/right and update the player
         document.addEventListener('keydown', e => {
+            
             if (e.keyCode === LEFT_ARROW_CODE) {
                 this.player.move(MOVE_LEFT);
+                    //it is too easy I want to put a condition to give a 1000 points
+                    //this.score = this.score + 1000;
+                    if (this.isEnemyClose()) {
+                    this.score += 1000;
+                    }
+                
+                
             }
             else if (e.keyCode === RIGHT_ARROW_CODE) {
                 this.player.move(MOVE_RIGHT);
+                    //it is too easy I want to put a condition to give a 1000 points
+                    if (this.isEnemyClose()) {
+                    this.score += 1000;
+                    }
+                
+                
+                
             }
+            
         });
+        
 
-        this.gameLoop();
-    }
+        this.gameLoop(); 
+    
+    
+    }//end of start function
+    
+     isEnemyClose() {
+                var closer = false;
+        
+            this.enemies.forEach((enemy) => {
+                if(enemy.x === this.player.x && (enemy.y + ENEMY_HEIGHT) > 300){
+                // console.log('Collision', 'enemy.y: ', enemy.y, ' this.player.y: ',  this.player.y);
+                    closer = true;
+                }
+
+            });
+        
+        
+            return closer;
+        }
 
     /*
     This is the core of the game engine. The `gameLoop` function gets called ~60 times per second
@@ -167,6 +202,8 @@ class Engine {
 
         // Increase the score!
         this.score += timeDiff;
+            console.log("This is my score ", this.score);
+            
 
         // Call update on all enemies
         this.enemies.forEach(enemy => enemy.update(timeDiff));
@@ -207,7 +244,7 @@ class Engine {
         // TODO: fix this function!
         var collision = false;
         
-        this.enemies.forEach((enemy, enemyIdx) =>{
+        this.enemies.forEach((enemy) =>{
             if(enemy.x === this.player.x && (enemy.y + ENEMY_HEIGHT) >= this.player.y){
                 // console.log('Collision', 'enemy.y: ', enemy.y, ' this.player.y: ',  this.player.y);
                 collision = true;
