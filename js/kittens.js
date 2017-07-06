@@ -84,7 +84,6 @@ class Engine {
     constructor(element) {
         // Setup the player
         this.player = new Player();
-
         // Setup enemies, making sure there are always three
         this.setupEnemies();
 
@@ -116,15 +115,19 @@ class Engine {
 
     // This method finds a random spot where there is no enemy, and puts one in there
     addEnemy() {
-        var enemySpots = GAME_WIDTH / ENEMY_WIDTH;
+        var enemySpots = GAME_WIDTH / ENEMY_WIDTH; //5
 
-        var enemySpot;
+        var enemySpot; //undefined
+        
         // Keep looping until we find a free enemy spot at random
-        while (!enemySpot || this.enemies[enemySpot]) {
-            enemySpot = Math.floor(Math.random() * enemySpots);
+        while (enemySpot === undefined || this.enemies[enemySpot]) {
+            
+            enemySpot = Math.floor(Math.random() * enemySpots); //Always be between 0-4
         }
 
         this.enemies[enemySpot] = new Enemy(enemySpot * ENEMY_WIDTH);
+        // console.log('this.enemies');
+        // [null, null, null, null, {x:12, y:232}]
     }
 
     // This method kicks off the game
@@ -200,7 +203,21 @@ class Engine {
 
     isPlayerDead() {
         // TODO: fix this function!
-        return false;
+        var collision = false;
+        
+        this.enemies.forEach((enemy, enemyIdx) =>{
+            if(enemy.x === this.player.x && (enemy.y + ENEMY_HEIGHT) >= this.player.y){
+                // console.log('Collision', 'enemy.y: ', enemy.y, ' this.player.y: ',  this.player.y);
+                collision = true;
+            }
+            // if(enemy.x === this.player.x){
+            //     console.log('enemy.y: ', enemy.y, ' this.player.y: ',  this.player.y);
+
+            // }
+        });
+        
+        
+        return collision;
     }
 }
 
